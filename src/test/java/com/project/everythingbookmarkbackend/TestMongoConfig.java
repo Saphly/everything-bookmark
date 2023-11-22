@@ -16,7 +16,7 @@ public class TestMongoConfig {
 
     @Bean
     public static MongoTemplate mongoTemplate() {
-        return new MongoTemplate(new SimpleMongoClientDatabaseFactory("mongodb://127.0.0.1:27017/everythingBookmarkTest/?directConnection=true&serverSelectionTimeoutMS=2000"));
+        return new MongoTemplate(new SimpleMongoClientDatabaseFactory("mongodb://127.0.0.1:27017/everythingBookmarkTest"));
     }
 
     public static void clearCollection() {
