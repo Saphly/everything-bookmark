@@ -1,12 +1,5 @@
 # Everything Bookmark Backend Server
 
-<details>
-    <summary>Table of Contents</summary>
-    <ol>
-        <li><a href="#about-the-project">About the project</a></li>
-    </ol>
-</details>
-
 ---
 
 ## About the project
@@ -53,3 +46,4 @@ mvn clean dependency:copy-dependencies
 ```
 mvn spring-boot:run
 ```
+

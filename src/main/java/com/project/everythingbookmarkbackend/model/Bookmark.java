@@ -33,6 +33,12 @@ public class Bookmark {
     @JsonProperty("dateFinished")
     private String dateFinished;
 
+    @JsonProperty("notes")
+    private String notes;
+
+    @JsonProperty("rating")
+    private int rating;
+
     public String getUrl() {
         return url;
     }
@@ -40,13 +46,6 @@ public class Bookmark {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    @JsonProperty("notes")
-    private String notes;
-
-    @JsonProperty("rating")
-    private byte rating;
-
     public String get_id() {
         return _id;
     }
@@ -103,11 +102,11 @@ public class Bookmark {
         this.notes = notes;
     }
 
-    public byte getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(byte rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
