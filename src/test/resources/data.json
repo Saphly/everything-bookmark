@@ -1,0 +1,26 @@
+[
+  {
+  "bookmarkTag": "Book",
+  "_id": "655e2d61c19b7d61541e3c6f",
+  "tag": "Book",
+  "title": "Cats",
+  "url": null,
+  "dateAdded": null,
+  "dateStarted": null,
+  "dateFinished": null,
+  "notes": null,
+  "rating": 1
+  },
+  {
+    "bookmarkTag": "Book",
+    "_id": "655e2d6ac19b7d61541e3c70",
+    "tag": "Book",
+    "title": "Dogs",
+    "url": null,
+    "dateAdded": null,
+    "dateStarted": null,
+    "dateFinished": null,
+    "notes": null,
+    "rating": 1
+  }
+]
