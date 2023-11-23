@@ -1,9 +1,16 @@
 package com.project.everythingbookmarkbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Document("bookmarks")
 public class Bookmark {
@@ -24,7 +31,9 @@ public class Bookmark {
     private String url;
 
     @JsonProperty("dateAdded")
-    @NotEmpty(message = "Bookmark must have a date added")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @FutureOrPresent
     private String dateAdded;
 
     @JsonProperty("dateStarted")
@@ -37,6 +46,8 @@ public class Bookmark {
     private String notes;
 
     @JsonProperty("rating")
+    @Min(value = 1, message = "Minimum value of Rating is 1")
+    @Max(value = 5, message = "Maximum value of Rating is 5")
     private int rating;
 
     public String getUrl() {
@@ -54,11 +65,11 @@ public class Bookmark {
         this._id = _id;
     }
 
-    public String getBookmarkTag() {
+    public String getTag() {
         return tag;
     }
 
-    public void setBookmarkTag(String tag) {
+    public void setTag(String tag) {
         this.tag = tag;
     }
 
