@@ -21,6 +21,7 @@ import java.util.List;
 import static com.project.everythingbookmarkbackend.helpers.JsonFileReader.fileToObjectList;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -42,6 +43,7 @@ class EverythingBookmarkBackendApplicationTests {
 		TestMongoConfig.clearCollection();
 	}
 
+
 	@Nested
 	@DisplayName("GET bookmarks tests")
 	class GetAll {
@@ -60,6 +62,31 @@ class EverythingBookmarkBackendApplicationTests {
 		}
 	}
 
+	@Nested
+	@DisplayName("GET bookmark by id tests")
+	class GetBookmarkById {
+		@BeforeEach
+		void repopulateCollection() {
+			TestMongoConfig.repopulateCollection(bookmarks);
+		}
+
+		@Test
+		@DisplayName("Should return the bookmark found using id")
+		public void shouldReturnBookmarkFoundById() throws Exception {
+			mockMvc.perform(get("/bookmarks/" + bookmarks.get(2).get_id()))
+					.andExpectAll(status().isOk(),
+							jsonPath("$.title").value(bookmarks.get(2).getTitle()),
+							jsonPath("$.rating").value(bookmarks.get(2).getRating()));
+		}
+
+		@Test
+		@DisplayName("Should return status 404 if given invalid bookmark id")
+		public void shouldReturnStatus404IfFindByInvalidId() throws Exception {
+			mockMvc.perform(get("/bookmarks/invalid-id"))
+					.andExpect(status().isNotFound());
+		}
+
+	}
 	@Nested
 	@DisplayName("When 1 or more bookmarks are found")
 	class WhenBookmarksFound {
@@ -135,6 +162,42 @@ class EverythingBookmarkBackendApplicationTests {
 										jsonPath("$.rating").value(bookmarks.get(0).getRating()),
 										jsonPath("$.dateAdded").value(bookmarks.get(0).getDateAdded())
 								);
+			}
+		}
+
+		@Nested
+		@DisplayName("Delete bookmark tests")
+		class DeleteBookmarkTests {
+
+			@BeforeEach
+			public void repopulateCollection() {
+				TestMongoConfig.repopulateCollection(bookmarks);
+			}
+
+			@BeforeEach
+			public void updateValidBookmark() {
+				testBookmark.set_id(bookmarks.get(0).get_id());
+				testBookmark.setTag(bookmarks.get(0).getTag());
+				testBookmark.setTitle(bookmarks.get(0).getTitle());
+				testBookmark.setRating(bookmarks.get(0).getRating());
+				testBookmark.setDateAdded(bookmarks.get(0).getDateAdded());
+			}
+
+			@Test
+			@DisplayName("Should delete the bookmark given a valid id")
+			public void shouldDeleteBookmarkById() throws Exception {
+				mockMvc.perform(post("/bookmarks/" + testBookmark.get_id()))
+						.andExpect(status().isOk());
+
+				mockMvc.perform(get("/bookmarks/" + testBookmark.get_id()))
+						.andExpect(status().isNotFound());
+			}
+
+			@Test
+			@DisplayName("Should receive status 404 if given an invalid id")
+			public void shouldReceive404StatusIfInvalidIdToDelete() throws Exception {
+				mockMvc.perform(post("/bookmarks/invalid-id"))
+						.andExpect(status().isNotFound());
 			}
 		}
 	}

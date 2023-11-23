@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookmarkServices {
@@ -16,6 +17,14 @@ public class BookmarkServices {
 
     public List<Bookmark> getAllBookmarks() {
         return bookmarkRepository.findAll();
+    }
+
+    public Optional<Bookmark> getBookmarkById(String _id) {
+        if(!bookmarkRepository.existsById(_id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "That bookmark could not be found");
+        };
+
+        return bookmarkRepository.findById(_id);
     }
 
     public Bookmark addBookmark(Bookmark bookmark) {
@@ -28,5 +37,13 @@ public class BookmarkServices {
         };
 
         return bookmarkRepository.save(bookmark);
+    }
+
+    public void deleteBookmark(String _id) {
+        if(!bookmarkRepository.existsById(_id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "That bookmark could not be found");
+        };
+
+        bookmarkRepository.deleteById(_id);
     }
 }

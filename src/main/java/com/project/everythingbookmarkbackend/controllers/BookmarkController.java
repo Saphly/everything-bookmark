@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Validated
@@ -26,6 +27,9 @@ public class BookmarkController {
         return bookmarkServices.getAllBookmarks();
     }
 
+    @GetMapping(value = "/bookmarks/{_id}")
+    public Optional<Bookmark> getBookmarkById(@PathVariable String _id) { return bookmarkServices.getBookmarkById(_id);}
+
     @PostMapping(value = "/bookmarks")
     @ResponseStatus(HttpStatus.CREATED)
     public Bookmark addBookmark(@Valid @RequestBody Bookmark bookmark) {
@@ -35,5 +39,10 @@ public class BookmarkController {
     @PutMapping(value = "/bookmarks/{_id}")
     public Bookmark updateBookmark(@PathVariable String _id, @Valid @RequestBody Bookmark bookmark) {
         return bookmarkServices.updateBookmark(_id, bookmark);
+    }
+
+    @PostMapping("/bookmarks/{_id}")
+    public void deleteBookmark(@PathVariable String _id) {
+        bookmarkServices.deleteBookmark(_id);
     }
 }
