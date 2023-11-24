@@ -122,3 +122,11 @@ was generated using the `JaCoCo` plugin.
 I have encountered several issues along the way, some of which are not resolved as of writing this. Click [Here](IssuesLog.md) 
 for the log of issues encountered.
 
+There are a few features that I would like to add in the future:
+- have the update function take in the bookmark id and the fields that we would like to update instead of sending the 
+whole chunk bookmark fields that were defined as required in the Bookmark model.
+- have a meaningful request response for the Delete function as opposed to having just the status code.
+- unit tests in addition to the integration tests.
+- Restructure the data model to have separate models for different categories of bookmark 
+
+
