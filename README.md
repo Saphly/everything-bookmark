@@ -1,7 +1,5 @@
 # Everything Bookmark Backend Server
 
----
-
 ## About the project
 
 This is the backend server for my Everything Bookmark project using `Java` and `Spring Boot`.

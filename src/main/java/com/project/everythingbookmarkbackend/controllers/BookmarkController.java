@@ -21,7 +21,6 @@ public class BookmarkController {
         this.bookmarkServices = bookmarkServices;
     }
 
-
     @GetMapping(value = "/bookmarks")
     public List<Bookmark> getAllBookmarks() {
         return bookmarkServices.getAllBookmarks();
@@ -42,6 +41,7 @@ public class BookmarkController {
     }
 
     @PostMapping("/bookmarks/{_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookmark(@PathVariable String _id) {
         bookmarkServices.deleteBookmark(_id);
     }

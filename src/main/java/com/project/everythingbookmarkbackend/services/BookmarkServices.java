@@ -19,10 +19,14 @@ public class BookmarkServices {
         return bookmarkRepository.findAll();
     }
 
-    public Optional<Bookmark> getBookmarkById(String _id) {
+    private void checkBookmarkExists(String _id) {
         if(!bookmarkRepository.existsById(_id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "That bookmark could not be found");
         };
+    }
+
+    public Optional<Bookmark> getBookmarkById(String _id) {
+        checkBookmarkExists(_id);
 
         return bookmarkRepository.findById(_id);
     }
@@ -32,17 +36,13 @@ public class BookmarkServices {
     }
 
     public Bookmark updateBookmark(String _id, Bookmark bookmark) {
-        if(!bookmarkRepository.existsById(_id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "That bookmark could not be found");
-        };
+        checkBookmarkExists(_id);
 
         return bookmarkRepository.save(bookmark);
     }
 
     public void deleteBookmark(String _id) {
-        if(!bookmarkRepository.existsById(_id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "That bookmark could not be found");
-        };
+        checkBookmarkExists(_id);
 
         bookmarkRepository.deleteById(_id);
     }

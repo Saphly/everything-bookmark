@@ -187,7 +187,7 @@ class EverythingBookmarkBackendApplicationTests {
 			@DisplayName("Should delete the bookmark given a valid id")
 			public void shouldDeleteBookmarkById() throws Exception {
 				mockMvc.perform(post("/bookmarks/" + testBookmark.get_id()))
-						.andExpect(status().isOk());
+						.andExpect(status().isNoContent());
 
 				mockMvc.perform(get("/bookmarks/" + testBookmark.get_id()))
 						.andExpect(status().isNotFound());
